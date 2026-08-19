@@ -13,7 +13,7 @@ Repo: `lca-paid-media-lab`
 |---|---|---|---|
 | 1 | GitHub repository setup | ✅ Complete | 2026-08-19 |
 | 2 | AWS EC2 dev server provisioned | ✅ Complete | 2026-08-19 |
-| 3 | VS Code Remote-SSH connection to EC2 | ⏳ Not started | — |
+| 3 | VS Code Remote-SSH connection to EC2 | ✅ Complete | 2026-08-19 |
 | 4 | Branch protection + first feature branch | ⏳ Not started | — |
 | 5 | S3 bucket + landing/archive/rejected prefixes | ⏳ Not started | — |
 | 6 | Unity Catalog: catalog + schemas (staging/bronze/silver/gold) | ⏳ Not started | — |
@@ -48,6 +48,21 @@ Repo: `lca-paid-media-lab`
 
 **Note:** Instance is stopped when not actively in use to avoid unnecessary
 compute cost (stopping does not affect stored data or the attached volume).
+
+## Phase 3 — VS Code Remote-SSH Connection ✅
+
+- SSH config added at `~/.ssh/config` (local Windows machine) with a
+  `lca-dev` host entry pointing to the EC2 instance's Public IPv4 address.
+- `.pem` private key permissions restricted to the current user only
+  (`icacls` — Windows equivalent of `chmod 400`), which resolved an initial
+  `Permission denied (publickey)` error.
+- Connected successfully via key-based authentication (no password) — VS
+  Code Server now runs on the EC2 instance itself.
+- **Known limitation:** the EC2 instance does not have an Elastic IP, so its
+  Public IPv4 address changes every time the instance is stopped and
+  restarted. The `HostName` in `~/.ssh/config` must be manually updated to
+  the new IP after every restart. Elastic IP was deliberately not used to
+  avoid its idle-attachment cost.
 
 ---
 
